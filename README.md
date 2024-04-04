@@ -1,0 +1,2 @@
+# BreastCancerPrediction
+The main goal of this project is to test different classic ML algorithms or techniques for binary classification on the Breast Cancer Prediction dataset (https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data) as a self-learning practice. Additionally, the aim of this project is to demonstrate my programming skills and knowledge in how to create a project from scratch to its deployment with a REST API, showcasing my capability of producing production-ready code.
