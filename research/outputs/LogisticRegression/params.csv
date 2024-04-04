@@ -1,0 +1,2 @@
+penalty,c_reg,solver,max_iter
+l2,10000,sag,5500
