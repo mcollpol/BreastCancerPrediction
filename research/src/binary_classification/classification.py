@@ -5,10 +5,10 @@ using ML models defined in Model for binary classification with numerical scaled
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import src.utils.utils as utils
 
 from sklearn.model_selection import learning_curve, GridSearchCV
 from sklearn import metrics
-from utils import utils
 
 
 def plot_learning_curve(model_obj, X, y, cv=None,
@@ -79,19 +79,20 @@ def evaluation(y_true, y_pred):
     return pd.DataFrame(results)
 
 
-def train_and_evaluate_model(model_obj, data, save_outputs=False, output_dir = ""):
+def train_and_evaluate_model(model_obj, X_train, y_train, X_test, y_test,
+                             save_outputs=False, output_dir = ""):
     """
     Function to train model and store its weights. 
     """
 
     model = model_obj.model
-    model.fit(data['X_train'], data['y_train'])
+    model.fit(X_train, y_train)
 
-    preds_train = model.predict(data['X_train'])
-    preds_test = model.predict(data['X_test'])
+    preds_train = model.predict(X_train)
+    preds_test = model.predict(X_test)
 
-    eval_train = evaluation(data['y_train'], preds_train)
-    eval_test = evaluation(data['y_test'], preds_test)
+    eval_train = evaluation(y_train, preds_train)
+    eval_test = evaluation(y_test, preds_test)
 
     print(f"For model {model_obj.model_name} with {model_obj.hyperparameters}:\n")
     print("Results for train set:\n")
@@ -100,7 +101,7 @@ def train_and_evaluate_model(model_obj, data, save_outputs=False, output_dir = "
     print("\nResults for test set:\n")
     print(eval_test)
 
-    confusion_matrix = metrics.confusion_matrix(data['y_test'], preds_test)
+    confusion_matrix = metrics.confusion_matrix(y_test, preds_test)
     class_labels = ['Class 0', 'Class 1']
 
     # Create a heatmap plot of the confusion matrix

@@ -8,14 +8,18 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB # Asumes features are independent
                                            # and follow a gaussian distribution.
-from utils import utils
+from src.utils import utils
+
+
+SEED = 42
 
 
 class Model():
     """
     Class for model initialization and model properties.
     """
-    def __init__(self, model_name, estimators_info=None, optimization=False, **kwargs):
+    def __init__(self, model_name, estimators_info=None,
+                 optimization=False, **kwargs):
         self._model_name = model_name
         self._optimization = optimization
         self._estimators_info = estimators_info
@@ -29,8 +33,11 @@ class Model():
                             'NaiveBayes']
         self._ensamble_methods = ['EnsambleVoting']
 
-        assert self._model_name in self._model_list or self._model_name in self._ensamble_methods, (
-                     f'Model {model_name} is not available, possible models are {self._model_list}')
+        if (self._model_name not in self._model_list and
+            self._model_name not in self._ensamble_methods):
+            raise ValueError(f'Model {self._model_name} is not available' +
+                             f'possible models are {self._model_list}.')
+
 
         # Apply class method to define model based on model_name.
         self._model = getattr(self, utils.get_method_name(self._model_name))()
@@ -99,7 +106,7 @@ class Model():
                                                                 'liblinear',
                                                                 'sag',
                                                                 'saga'],
-                                                     'max_iter': [5500, 6000, 7000]}                
+                                                     'max_iter': [10000, 15000, 20000]}                
             return LogisticRegression()
 
         # Hyperparameters to be used when defining the model.
@@ -266,8 +273,10 @@ class Model():
         for estimator in self._estimators_info:
 
             estimator_name = estimator['name']
-            assert estimator_name in self._model_list, (f'Estimator with name {estimator_name} ' +
-                                                  'not available, options are {self._model_list}.')
+            if estimator_name not in self._model_list:
+                raise ValueError(f'Estimator with name {estimator_name} not available' +
+                                 f'options are {self._model_list}.')
+
 
             # Set hyperparameters to be used for estimator model definition.
             self._hyperparameters = estimator['params']

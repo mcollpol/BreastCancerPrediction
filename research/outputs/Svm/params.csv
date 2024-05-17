@@ -1,2 +1,2 @@
 C,kernel,gamma,degree,class_weight
-10,poly,scale,4,balanced
+10,poly,auto,2,balanced

@@ -27,10 +27,10 @@ class FeatureSelectorEnsemble(TransformerMixin):
     def __init__(self, models, max_features_per_model=10, voting_threshold=2):
         if not isinstance(models, list):
             raise ValueError('models should be a list')
-        if not isinstance(max_features_per_model, (int)):
+        if not isinstance(max_features_per_model, int):
             raise ValueError('max_features_per_model should be an integer')
-        if not isinstance(voting_threshold, (int)):
-            raise ValueError('voting_threshold should be an ineger')
+        if not isinstance(voting_threshold, int):
+            raise ValueError('voting_threshold should be an integer')
 
         self.models = models
         self.max_features_per_model = max_features_per_model

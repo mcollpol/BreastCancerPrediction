@@ -9,8 +9,6 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from sklearn.model_selection import train_test_split
-
 
 def load_data(data_path):
     """
@@ -22,27 +20,6 @@ def load_data(data_path):
     df = pd.read_csv(data_path)
 
     return df
-
-
-def split_train_test(df, predictors, target, test_size=0.2):
-    """
-    Splits data in train, test and val sets. Returns dict of dataframes. 
-    """
-
-    assert target in df.columns.tolist(
-    ), 'Target {self._target} not present in df.'
-    assert all(elem in df.columns.tolist() for elem in predictors), ('Provided ' +
-                                                    f'predictors {predictors} not present in df.')
-
-    X = df[predictors]  # Features.
-    y = df[target]  # Target variable.
-
-    # Split the data into train and test sets with shuffling.
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size,
-                                                        shuffle=True, random_state=42)
-
-    return {'X_train': X_train, 'X_test': X_test,
-            'y_train': y_train, 'y_test': y_test}
 
 
 def save_dict_to_csv(data_dict, data_path):
@@ -79,12 +56,14 @@ def get_method_name(name):
     """
     Converts MethodName into method_name.
     """
-    return 'define_' + ''.join(['_' + c.lower() if c.isupper() else c for c in name]).lstrip('_')
+    return 'define_' + ''.join(['_' + c.lower() if c.isupper()
+                                else c for c in name]).lstrip('_')
 
 
 def transform_param_ranges(param_grid, model_name, param_ranges):
     """
-    Transforms parameters to optimize with GridSearch for a model and ads them to existing param grid.
+    Transforms parameters to optimize with GridSearch for a model and
+    ads them to existing param grid.
     Meant to be used for models that combine classifiers like ensamble models.  
     """
     transformed_ranges = {}
