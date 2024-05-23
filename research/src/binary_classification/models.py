@@ -16,7 +16,51 @@ SEED = 42
 
 class Model():
     """
-    Class for model initialization and model properties.
+    Class for model initialization and managing model properties.
+
+    Parameters:
+    ----------
+    model_name : str
+        The name of the model to initialize. Must be one of the supported models listed in `_model_list` or `_ensamble_methods`.
+
+    estimators_info : dict, optional
+        Additional information about estimators, if any. Default is None.
+
+    optimization : bool, optional
+        Flag indicating whether hyperparameter optimization is to be performed. Default is False.
+
+    **kwargs : dict
+        Additional keyword arguments for model hyperparameters.
+
+    Attributes:
+    ----------
+    _model_name : str
+        The name of the model.
+
+    _optimization : bool
+        Indicates whether hyperparameter optimization is to be performed.
+
+    _estimators_info : dict or None
+        Information about estimators.
+
+    _hyperparameters : dict
+        Dictionary of model hyperparameters.
+
+    _default_hyperparams_to_optimize : None or dict
+        Default hyperparameters to optimize, if any.
+
+    _model_list : list
+        List of supported model names.
+
+    _ensamble_methods : list
+        List of supported ensemble methods.
+
+    _model : object
+        The initialized model instance based on `model_name`.
+
+    Methods:
+    -------
+    None in the current implementation, but the class dynamically assigns a method to `_model` based on `model_name`.
     """
     def __init__(self, model_name, estimators_info=None,
                  optimization=False, **kwargs):

@@ -7,20 +7,29 @@ from sklearn.base import TransformerMixin
 
 
 class FeatureSelectorEnsemble(TransformerMixin):
-    """Select features using an ensemble of models.
+    """
+    Select features using an ensemble of models.
 
     This transformer selects features based on an ensemble of models.
     Each model is used to fit the data and select features.
     The selected features are determined based on the voting threshold.
 
     Parameters:
-    - models (list): List of models to be used for feature selection.
-    - max_features_per_model (int or None): Maximum number of features to select per model.
+    ----------
+    models : list
+        List of models to be used for feature selection.
+
+    max_features_per_model : int or None, optional (default=10)
+        Maximum number of features to select per model.
         (None selects all but the ones with 0 impact)
-    - voting_threshold (int): Voting threshold for feature selection.
+
+    voting_threshold : int, optional (default=2)
+        Voting threshold for feature selection.
 
     Attributes:
-    - _selected_features (list): List of selected feature names.
+    ----------
+    _selected_features : list
+        List of selected feature names.
 
     """
 
@@ -38,12 +47,21 @@ class FeatureSelectorEnsemble(TransformerMixin):
         self._selected_features = []
 
     def fit(self, X, y):
-        """Selects features using a voting aproach.
+        """
+        Selects features using a voting approach.
 
         Parameters:
-        - X (DataFrame): Input features.
-        - y (Series): Target variable.
+        ----------
+        X : DataFrame
+            Input features.
 
+        y : Series
+            Target variable.
+
+        Returns:
+        -------
+        self : object
+            Returns the instance itself.
         """
         voting_count = []
         for model in self.models:
@@ -62,14 +80,20 @@ class FeatureSelectorEnsemble(TransformerMixin):
         return self
 
     def transform(self, X, y=None):
-        """Transform the input data by selecting the chosen features.
+        """
+        Transform the input data by selecting the chosen features.
 
         Parameters:
-        - X (DataFrame): Input features.
-        - y (Series): Target variable (unused), here to acomodate sklearn API conventions.
+        ----------
+        X : DataFrame
+            Input features.
+
+        y : Series, optional (default=None)
+            Target variable (unused), here to accommodate sklearn API conventions.
 
         Returns:
-        - (DataFrame): Transformed features with selected columns.
-
+        -------
+        DataFrame
+            Transformed features with selected columns.
         """
         return X[self._selected_features]

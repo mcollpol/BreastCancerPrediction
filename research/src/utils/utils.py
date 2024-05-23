@@ -10,46 +10,94 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-def load_data(data_path):
-    """
-    Loads cleaned data from csv. Returns pandas DataFrame.
-    """
-    assert os.path.exists(data_path), f"Filepath {data_path} does not exist"
-    assert os.path.splitext(data_path)[1] == ".csv", "File is not a CSV"
-
-    df = pd.read_csv(data_path)
-
-    return df
-
-
 def save_dict_to_csv(data_dict, data_path):
     """
-    Save dict() to csv.
+    Save a dictionary to a CSV file.
+
+    Parameters:
+    ----------
+    data_dict : dict
+        The dictionary to be saved to the CSV file.
+
+    data_path : str
+        The path to save the CSV file.
+
+    Returns:
+    -------
+    None
+
+    Raises:
+    -------
+    IOError:
+        If an error occurs while writing to the CSV file.
+
+    Notes:
+    ------
+    This function saves the contents of a dictionary to a CSV file. Each key-value pair
+    in the dictionary corresponds to a row in the CSV file, where the keys are the column
+    headers and the values are the values in the row.
     """
-    with open(data_path, 'w', newline='') as file:
-        writer = csv.DictWriter(file, fieldnames=data_dict.keys())
-        writer.writeheader()
-        writer.writerow(data_dict)
+    try:
+        with open(data_path, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.DictWriter(file, fieldnames=data_dict.keys())
+            writer.writeheader()
+            writer.writerow(data_dict)
+    except IOError as e:
+        print(f"An error occurred while writing to the CSV file: {e}")
+        raise
 
 
-def save_model_outputs(model, model_name, hyperparams, eval_train, eval_test, output_dir):
+def save_model_outputs(model_obj, eval_train, eval_test, output_dir):
     """
-    Saves model to a pickle, model hyperparams and evaluation results to output_dir.
+    Save model outputs to specified directory.
+
+    Parameters:
+    ----------
+    model : object
+        The trained model object to be saved.
+
+    eval_train : DataFrame
+        Evaluation metrics for the training set.
+
+    eval_test : DataFrame
+        Evaluation metrics for the test set.
+
+    output_dir : str
+        The directory path where outputs will be saved.
+
+    Returns:
+    -------
+    None
+
+    Raises:
+    -------
+    IOError:
+        If an error occurs while writing to files.
+
+    Notes:
+    ------
+    This function saves the trained model, its hyperparameters, and evaluation results
+    to the specified output directory. It creates subdirectories for each model if they
+    do not exist.
     """
-    # Create directories if they don't exist.
-    model_dir = output_dir + '/' + model_name
-    os.makedirs(model_dir, exist_ok=True)
+    try:
+        # Create model directory if it doesn't exist.
+        model_dir = os.path.join(output_dir, model_obj.model_name)
+        os.makedirs(model_dir, exist_ok=True)
 
-    # Save the model.
-    with open(f'{model_dir}/model.pkl', 'wb') as file:
-        pickle.dump(model, file)
+        # Save the model.
+        with open(os.path.join(model_dir, 'model.pkl'), 'wb') as file:
+            pickle.dump(model_obj.model, file)
 
-    # Save best params.
-    save_dict_to_csv(hyperparams, f'{model_dir}/params.csv' )
+        # Save best parameters.
+        save_dict_to_csv(model_obj.hyperparameters, os.path.join(model_dir, 'params.csv'))
 
-    # Save the evaluation.
-    eval_train.to_csv(f'{model_dir}/Train_Evaluation.csv')
-    eval_test.to_csv(f'{model_dir}/Test_Evaluation.csv')
+        # Save the evaluation.
+        eval_train.to_csv(os.path.join(model_dir, 'Train_Evaluation.csv'), index=False)
+        eval_test.to_csv(os.path.join(model_dir, 'Test_Evaluation.csv'), index=False)
+    except IOError as e:
+        print(f"An error occurred while writing model outputs: {e}")
+        raise
 
 
 def get_method_name(name):
