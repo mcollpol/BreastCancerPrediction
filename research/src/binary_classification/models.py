@@ -107,7 +107,7 @@ class Model():
                                                                 'sag',
                                                                 'saga'],
                                                      'max_iter': [10000, 15000, 20000]}                
-            return LogisticRegression()
+            return LogisticRegression(random_state=SEED)
 
         # Hyperparameters to be used when defining the model.
         penalty = self._hyperparameters.get('penalty', 'l2') # Regularization penalty term.
@@ -120,7 +120,11 @@ class Model():
                                  'solver': solver,
                                  'max_iter': max_iter}
         # Model definition.
-        model = LogisticRegression(penalty=penalty, C=c_reg, solver=solver, max_iter=max_iter)
+        model = LogisticRegression(penalty=penalty,
+                                   C=c_reg,
+                                   solver=solver,
+                                   max_iter=max_iter,
+                                   random_state=SEED)
 
         return model
 
@@ -136,13 +140,13 @@ class Model():
                                                      'min_samples_split': [2, 5, 10],
                                                      'min_samples_leaf': [1, 2, 4],
                                                      'max_features': ['sqrt', 'log2', 0.5]}
-            return DecisionTreeClassifier()
+            return DecisionTreeClassifier(random_state=SEED)
 
         # Hyperparameters to be used when defining the model.
-        criterion = self._hyperparameters.get('criterion', 'gini') # Function to measure quality of a
-                                                                  # split.
+        criterion = self._hyperparameters.get('criterion', 'gini') # Function to measure quality
+                                                                   # of a split.
         max_depth = self._hyperparameters.get('max_depth', None) # Maximum depth of each decision
-                                                                # tree.
+                                                                 # tree.
         min_samples_split = self._hyperparameters.get('min_samples_split', 2) # Minimum number of
                                                             # samples to split an internal node.
         min_samples_leaf = self._hyperparameters.get('min_samples_leaf', 1) # Minimum number of
@@ -162,7 +166,8 @@ class Model():
                                        max_depth=max_depth,
                                        min_samples_split=min_samples_split,
                                        min_samples_leaf=min_samples_leaf,
-                                       max_features=max_features)
+                                       max_features=max_features,
+                                       random_state=SEED)
 
         return model
 
@@ -178,7 +183,7 @@ class Model():
                                                      'min_samples_split':  [2, 5, 10],
                                                      'min_samples_leaf': [1, 2, 4],
                                                      'max_features': ['sqrt', 'log2', 0.5]}
-            return RandomForestClassifier()
+            return RandomForestClassifier(random_state=SEED)
 
         # Hyperparameters to be used when defining the model.
         n_estimators = self._hyperparameters.get('n_estimators', 100)
@@ -202,7 +207,8 @@ class Model():
                                        max_depth=max_depth,
                                        min_samples_split=min_samples_split,
                                        min_samples_leaf=min_samples_leaf,
-                                       max_features=max_features)
+                                       max_features=max_features,
+                                       random_state=SEED)
 
         return model
 
@@ -217,7 +223,7 @@ class Model():
                                                      'gamma': ['scale', 'auto', 0.1, 1],
                                                      'degree': [2, 3, 4],
                                                      'class_weight': [None, 'balanced']}
-            return SVC(probability=True)
+            return SVC(probability=True, random_state=SEED)
 
         # Hyperparameters to be used when defining the model.
         c_reg = self._hyperparameters.get('C', 1.0) # The regularization parameter.
@@ -237,8 +243,13 @@ class Model():
                                 'class_weight': class_weight}
 
         # Model definition.
-        model = SVC(C=c_reg, kernel=kernel, gamma=gamma,
-                    degree=degree, class_weight=class_weight, probability=True)
+        model = SVC(C=c_reg,
+                    kernel=kernel,
+                    gamma=gamma,
+                    degree=degree,
+                    class_weight=class_weight,
+                    probability=True,
+                    random_state=SEED)
 
         return model
 

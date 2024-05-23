@@ -1,2 +1,2 @@
-LogisticRegression__penalty,LogisticRegression__c_reg,LogisticRegression__solver,LogisticRegression__max_iter,Svm__C,Svm__kernel,Svm__gamma,Svm__degree,Svm__class_weight,DecisionTree__criterion,DecisionTree__max_depth,DecisionTree__min_samples_split,DecisionTree__min_samples_leaf,DecisionTree__max_features
-l2,1.0,lbfgs,100,1.0,rbf,scale,3,,gini,,2,1,sqrt
+LogisticRegression__penalty,LogisticRegression__c_reg,LogisticRegression__solver,LogisticRegression__max_iter,Svm__C,Svm__kernel,Svm__gamma,Svm__degree,Svm__class_weight,RandomForest__n_estimators,RandomForest__max_depth,RandomForest__min_samples_split,RandomForest__min_samples_leaf,RandomForest__max_features
+l2,1.0,newton-cg,10000,10,poly,auto,2,balanced,100,,5,1,sqrt

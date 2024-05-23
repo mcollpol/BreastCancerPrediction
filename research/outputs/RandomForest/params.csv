@@ -1,2 +1,2 @@
 n_estimators,max_depth,min_samples_split,min_samples_leaf,max_features
-50,,10,1,sqrt
+100,,5,1,sqrt
