@@ -4,7 +4,6 @@ Module to implement utility functions.
 import os
 import pickle
 import csv
-import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -102,7 +101,13 @@ def save_model_outputs(model_obj, eval_train, eval_test, output_dir):
 
 def get_method_name(name):
     """
-    Converts MethodName into method_name.
+    Converts a camel case method name into a snake case method name prefixed with 'define_'.
+
+    Args:
+        name (str): The camel case method name to be converted.
+
+    Returns:
+        str: The converted snake case method name prefixed with 'define_'.
     """
     return 'define_' + ''.join(['_' + c.lower() if c.isupper()
                                 else c for c in name]).lstrip('_')
@@ -110,9 +115,18 @@ def get_method_name(name):
 
 def transform_param_ranges(param_grid, model_name, param_ranges):
     """
-    Transforms parameters to optimize with GridSearch for a model and
-    ads them to existing param grid.
-    Meant to be used for models that combine classifiers like ensamble models.  
+    Transforms parameter names to be compatible with GridSearchCV for a given model
+    and adds them to the existing parameter grid.
+
+    This function is particularly useful for ensemble models that combine multiple classifiers.
+
+    Args:
+        param_grid (dict): The existing parameter grid to be updated.
+        model_name (str): The name of the model to be prefixed to each parameter.
+        param_ranges (dict): The parameter ranges to be transformed and added to the grid.
+
+    Returns:
+        None: The param_grid is updated in place.
     """
     transformed_ranges = {}
     for param, values in param_ranges.items():
@@ -123,7 +137,14 @@ def transform_param_ranges(param_grid, model_name, param_ranges):
 
 def plot_confusion_matrix(confusion_matrix, class_labels):
     """
-    Plots a confusion matrix using a headmap.
+    Plots a confusion matrix using a heatmap.
+
+    Args:
+        confusion_matrix (ndarray): The confusion matrix to be plotted.
+        class_labels (list): The list of class labels to be used for the x and y axes.
+
+    Returns:
+        None: The function creates a plot of the confusion matrix.
     """
     sns.heatmap(confusion_matrix, annot=True, fmt='d', cmap='Blues',
                 xticklabels=class_labels, yticklabels=class_labels)
