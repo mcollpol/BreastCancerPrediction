@@ -2,18 +2,20 @@
 package_name: log_reg_model
 
 # Data Files.
-data_file: breast_cancer_wisconsin_diagnostic_dataset.csv
+train_data_file: train.csv
+test_data_file: test.csv
 
-# Columns to drop
+# Columns to drop.
 columns_to_drop:
   - id
   - Unnamed: 32
 
-# Variables.
-target: diagnosis
-
+# Pipeline vars.
 pipeline_name: log_reg_model
 pipeline_save_file: log_reg_model_output_v
+
+# Variables.
+target: diagnosis
 
 features: 
   - concavity_mean
@@ -38,8 +40,15 @@ random_state: 42
 outliers_threshold: 4
 outliers_limits: 0.1
 
+# Target mapping.
+target_map:
+  - M: 1
+  - B: 0
+
 # Scaler config.
-scaler_feature_range : (0, 1)
+scaler_feature_range:
+  - 0
+  - 1
 
 # Variables to square root transform.
 square_root_vars: 
@@ -49,7 +58,7 @@ square_root_vars:
   - concave points_worst
 
 # Variables to log transform.
-log_transform_var:
+log_transform_vars:
   - area_se
   - radius_worst
   - texture_worst

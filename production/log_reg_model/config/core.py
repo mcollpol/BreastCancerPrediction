@@ -56,7 +56,8 @@ class AppConfig(BaseModel):
         columns_to_drop (List[str]): List of columns to drop from the dataset.
     """
     package_name: str
-    data_file: str
+    train_data_file: str
+    test_data_file: str
     pipeline_name: str
     pipeline_save_file: str
     columns_to_drop: List[str]
@@ -78,6 +79,7 @@ class ModelConfig(BaseModel):
         model_params (Dict[str, Any]): Parameters for the model.
     """
     target: str
+    target_map: Dict[str, int]
     features: List[str]
     test_size: float
     random_state: int
@@ -85,7 +87,7 @@ class ModelConfig(BaseModel):
     outliers_limits: float
     scaler_feature_range: Sequence[int]  # Tuple.
     square_root_vars: Sequence[str]
-    log_transform_var: Sequence[str]
+    log_transform_vars: Sequence[str]
     model_params: Dict[str, Any]
 
 class Config(BaseModel):
