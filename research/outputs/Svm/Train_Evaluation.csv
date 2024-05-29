@@ -1,2 +1,2 @@
-,accuracy,precision,recall,f1,auc_roc
-0,0.9883,0.9894,0.9791,0.9842,0.9864
+accuracy,precision,recall,f1,auc_roc
+0.986,0.989,0.973,0.9809,0.9833

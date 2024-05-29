@@ -1,2 +1,2 @@
 criterion,max_depth,min_samples_split,min_samples_leaf,max_features
-entropy,,2,2,0.5
+gini,5,2,1,sqrt
