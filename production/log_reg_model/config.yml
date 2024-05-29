@@ -1,0 +1,67 @@
+# Package Overview.
+package_name: log_reg_model
+
+# Data Files.
+data_file: breast_cancer_wisconsin_diagnostic_dataset.csv
+
+# Columns to drop
+columns_to_drop:
+  - id
+  - Unnamed: 32
+
+# Variables.
+target: diagnosis
+
+pipeline_name: log_reg_model
+pipeline_save_file: log_reg_model_output_v
+
+features: 
+  - concavity_mean
+  - concave points_mean
+  - area_se
+  - radius_worst
+  - texture_worst
+  - perimeter_worst
+  - area_worst
+  - smoothness_worst
+  - concavity_worst
+  - concave points_worst
+  - symmetry_worst
+
+# Train/test split.
+test_size: 0.1
+
+# Set the random seed.
+random_state: 42
+
+# Outliers transformer config.
+outliers_threshold: 4
+outliers_limits: 0.1
+
+# Scaler config.
+scaler_feature_range : (0, 1)
+
+# Variables to square root transform.
+square_root_vars: 
+  - concavity_mean
+  - concave points_mean
+  - concavity_worst
+  - concave points_worst
+
+# Variables to log transform.
+log_transform_var:
+  - area_se
+  - radius_worst
+  - texture_worst
+  - perimeter_worst
+  - area_worst
+  - smoothness_worst
+  - symmetry_worst
+
+# Model parameters.
+model_params:
+  penalty: l2
+  C: 1000
+  solver: newton-cg
+  max_iter: 10000
+  random_state: 42
