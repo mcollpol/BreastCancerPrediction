@@ -1,2 +1,2 @@
 penalty,c_reg,solver,max_iter
-l2,1000,newton-cg,10000
+l2,1.0,lbfgs,100

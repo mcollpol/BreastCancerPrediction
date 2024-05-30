@@ -1,2 +1,2 @@
-LogisticRegression__penalty,LogisticRegression__c_reg,LogisticRegression__solver,LogisticRegression__max_iter,Svm__C,Svm__kernel,Svm__gamma,Svm__degree,Svm__class_weight,RandomForest__n_estimators,RandomForest__max_depth,RandomForest__min_samples_split,RandomForest__min_samples_leaf,RandomForest__max_features
-l2,1.0,newton-cg,10000,0.1,poly,1,3,,20,5,2,1,0.5
+LogisticRegression__penalty,LogisticRegression__c_reg,LogisticRegression__solver,LogisticRegression__max_iter,Svm__C,Svm__kernel,Svm__gamma,Svm__degree,Svm__class_weight,NaiveBayes__priors
+l2,1.0,lbfgs,100,0.1,poly,1,3,,
