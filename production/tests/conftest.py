@@ -3,9 +3,9 @@ Module for defining pytest fixtures for testing.
 
 This module defines pytest fixtures that can be used for testing purposes.
 """
-import pytest
-import pandas as pd
 import numpy as np
+import pandas as pd
+import pytest
 
 from log_reg_model.config.core import config
 from log_reg_model.processing.data_manager import load_dataset
@@ -24,7 +24,7 @@ def sample_input_data():
 
 
 @pytest.fixture
-def example_data_with_outliers():
+def test_sample_data():
     """
     Fixture for generating example DataFrame with some outliers.
 
@@ -37,6 +37,12 @@ def example_data_with_outliers():
         'B': np.random.normal(0, 1, 100),
         'C': np.random.normal(0, 1, 100),
     })
+
+    # Creating outliers.
     data.loc[0, 'A'] = 1000
     data.loc[1, 'B'] = -1000
+
+    # Ensure that 'C' column is always positive.
+    data['C'] = np.abs(data['C'])
+
     return data

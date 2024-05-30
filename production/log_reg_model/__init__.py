@@ -1,8 +1,12 @@
+"""
+Package init. Initializes the logger and the package version.
+"""
 import logging
 
 from log_reg_model.config.core import PACKAGE_ROOT, config
 
-# Adding only NullHandler to the library's loggers to avoid interfering with the application's logging configuration.
+# Adding only NullHandler to the library's loggers to avoid interfering with
+# the application's logging configuration.
 logging.getLogger(config.app_config.package_name).addHandler(logging.NullHandler())
 
 

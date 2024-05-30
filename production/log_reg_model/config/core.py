@@ -30,13 +30,12 @@ Raises:
     ValidationError: If the configuration data does not match the expected schema.
 """
 from pathlib import Path
-from typing import Dict, List, Any, Optional, Sequence
+from typing import Dict, List, Optional, Sequence, Tuple
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
 import log_reg_model
-
 
 # Project Directories
 PACKAGE_ROOT = Path(log_reg_model.__file__).resolve().parent
@@ -44,6 +43,7 @@ ROOT = PACKAGE_ROOT.parent
 CONFIG_FILE_PATH = PACKAGE_ROOT / "config.yml"
 DATASET_DIR = PACKAGE_ROOT / "datasets"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
+
 
 class AppConfig(BaseModel):
     """
@@ -62,6 +62,7 @@ class AppConfig(BaseModel):
     pipeline_name: str
     pipeline_save_file: str
     columns_to_drop: List[str]
+
 
 class ModelConfig(BaseModel):
     """
@@ -87,10 +88,11 @@ class ModelConfig(BaseModel):
     random_state: int
     outliers_threshold: int
     outliers_limits: float
-    scaler_feature_range: Sequence[int]  # Tuple.
+    scaler_feature_range: Tuple[int, int]
     square_root_vars: Sequence[str]
     log_transform_vars: Sequence[str]
-    model_params: Dict[str, Any]
+    model_params: Dict[str, str]
+
 
 class Config(BaseModel):
     """
@@ -102,6 +104,7 @@ class Config(BaseModel):
     """
     app_config: AppConfig
     model_config: ModelConfig
+
 
 def find_config_file() -> Path:
     """
@@ -116,6 +119,7 @@ def find_config_file() -> Path:
     if CONFIG_FILE_PATH.is_file():
         return CONFIG_FILE_PATH
     raise FileNotFoundError(f"Configuration file not found at {CONFIG_FILE_PATH!r}")
+
 
 def fetch_config_from_yaml(cfg_path: Optional[Path] = None) -> YAML:
     """
@@ -138,6 +142,7 @@ def fetch_config_from_yaml(cfg_path: Optional[Path] = None) -> YAML:
             parsed_config = load(conf_file.read())
             return parsed_config
     raise OSError(f"Did not find config file at path: {cfg_path}")
+
 
 def create_and_validate_config(parsed_config: YAML = None) -> Config:
     """
@@ -162,6 +167,7 @@ def create_and_validate_config(parsed_config: YAML = None) -> Config:
     )
 
     return _config
+
 
 # Load and validate the configuration.
 config = create_and_validate_config()

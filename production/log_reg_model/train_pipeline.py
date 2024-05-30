@@ -9,7 +9,7 @@ It includes functions to:
 
 Example Usage:
     To train the model, simply run this script as follows:
-    
+
     $ python train.py
 
 Functions:
@@ -39,8 +39,7 @@ def run_training() -> None:
     data = load_dataset(file_name=config.app_config.train_data_file)
 
     # divide train and test
-    X_train, _ , y_train, _ = train_test_split(
-        data.drop(config.columns_to_drop + [config.model_config.target], axis=1),
+    X_train, _, y_train, _ = train_test_split(
         data[config.model_config.features],  # predictors
         data[config.model_config.target],
         test_size=config.model_config.test_size,
@@ -52,6 +51,7 @@ def run_training() -> None:
 
     # persist trained model
     save_pipeline(pipeline_to_persist=pipe)
+
 
 if __name__ == "__main__":
     run_training()

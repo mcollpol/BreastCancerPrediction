@@ -25,7 +25,6 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
-
 from sklearn.pipeline import Pipeline
 
 from log_reg_model import __version__ as _version
@@ -43,11 +42,10 @@ def load_dataset(*, file_name: str) -> pd.DataFrame:
         pd.DataFrame: The loaded and transformed DataFrame.
     """
     df = pd.read_csv(Path(f"{DATASET_DIR}/{file_name}"))
-
-    # Renaming variables with spaces.
-    df = df.rename(columns=lambda x: x.replace(" ", "_"))
+    df = df.drop(columns=config.app_config.columns_to_drop)
     # Transforming the target variable to binary.
-    df[config.target] = df[config.model_config.target].map(config.model_config.target_map)
+    df[config.model_config.target] = (df[config.model_config.target]
+                                      .map(config.model_config.target_map))
     return df
 
 

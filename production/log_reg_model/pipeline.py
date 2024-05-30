@@ -26,28 +26,29 @@ Example Usage:
     from sklearn.model_selection import train_test_split
     from log_reg_model.config.core import config
     from log_reg_model.pipeline import pipe
-    
+
     # Load and split your data
     X_train, X_test, y_train, y_test = train_test_split(
         data[config.features],
         data[config.target],
         test_size=config.test_size,
         random_state=config.random_state)
-    
+
     # Fit the pipeline
     pipe.fit(X_train, y_train)
-    
+
     # Predict using the pipeline
     predictions = pipe.predict(X_test)
 """
+from feature_engine.transformation import LogTransformer
+from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LogisticRegression
-
-from feature_engine.transformation import LogTransformer
 
 from log_reg_model.config.core import config
 from log_reg_model.processing import features as pp
+
+model_params = config.model_config.model_params
 
 pipe = Pipeline([
     # Outliers.
@@ -62,5 +63,11 @@ pipe = Pipeline([
     # Scaling.
     ('scaler', MinMaxScaler(feature_range=config.model_config.scaler_feature_range)),
     # Model.
-    ('model', LogisticRegression(**config.model_config.model_params)),
+    ('model', LogisticRegression(
+                                penalty=model_params['penalty'],
+                                C=float(model_params['C']),
+                                solver=model_params['solver'],
+                                max_iter=int(model_params['max_iter']),
+                                random_state=int(model_params['random_state'])
+                                )),
 ])

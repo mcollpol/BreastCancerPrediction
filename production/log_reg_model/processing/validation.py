@@ -16,8 +16,8 @@ from typing import List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-
 from pydantic import BaseModel, ValidationError
+
 from log_reg_model.config.core import config
 
 
@@ -53,8 +53,6 @@ def validate_inputs(*, input_data: pd.DataFrame) -> Tuple[pd.DataFrame, Optional
         Tuple[pd.DataFrame, Optional[dict]]: A tuple containing the validated
         DataFrame and any validation errors.
     """
-    # Renaming columns with spaces.
-    input_data = input_data.rename(columns=lambda x: x.replace(" ", "_"))
     relevant_data = input_data[config.model_config.features].copy()
     validated_data = drop_na_inputs(input_data=relevant_data)
     errors = None
