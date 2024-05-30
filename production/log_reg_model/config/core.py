@@ -18,7 +18,8 @@ Functions:
 
 Usage:
     This module is typically used to load and validate the configuration settings for the project,
-    ensuring all necessary parameters are correctly specified before running the model training pipeline.
+    ensuring all necessary parameters are correctly specified before running the model
+    training pipeline.
 
 Example:
     config = create_and_validate_config()
