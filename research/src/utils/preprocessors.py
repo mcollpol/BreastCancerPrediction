@@ -3,6 +3,7 @@ Custom sklearn Transformers for data preprocessing.
 
 """
 import numpy as np
+import pandas as pd
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from scipy.stats.mstats import winsorize
@@ -59,15 +60,21 @@ class OutliersTransformer(BaseEstimator, TransformerMixin):
         self : object
             Returns the instance itself.
         """
-        # Check if all specified variables are present in the DataFrame
+        # Checking if all specified variables are present in the DataFrame.
         missing_vars = set(self.variables) - set(X.columns)
         if missing_vars:
             raise ValueError(f"Variables not found in the DataFrame: {missing_vars}")
+        self._outliers = pd.DataFrame(index=X.index, columns=self.variables)
 
         # Calculate z-scores and detect outliers
-        z_scores = (X[self.variables] -
-                    X[self.variables].mean()) / X[self.variables].std()
-        self._outliers = np.abs(z_scores) > self.threshold
+        for var in self.variables:
+            var_std = X[var].std()
+
+            if var_std == 0:  # Handling the case where standard deviation is zero.
+                self._outliers[var] = False  # Mark all values as non-outliers.
+            else:
+                z_scores = (X[var] - X[var].mean()) / var_std
+                self._outliers[var] = np.abs(z_scores) > self.threshold
 
         return self
 
@@ -87,7 +94,6 @@ class OutliersTransformer(BaseEstimator, TransformerMixin):
         X_transformed : pandas DataFrame
             Transformed DataFrame with winsorized outliers.
         """
-        # Copy to avoid modifying the original DataFrame
         X_transformed = X.copy()
 
         # Apply winsorizing to detected outliers

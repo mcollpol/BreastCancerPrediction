@@ -82,6 +82,7 @@ class ModelConfig(BaseModel):
     target_map: Dict[str, int]
     features: List[str]
     test_size: float
+    split_seed: int
     random_state: int
     outliers_threshold: int
     outliers_limits: float

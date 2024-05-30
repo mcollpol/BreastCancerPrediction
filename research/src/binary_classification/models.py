@@ -21,7 +21,8 @@ class Model():
     Parameters:
     ----------
     model_name : str
-        The name of the model to initialize. Must be one of the supported models listed in `_model_list` or `_ensamble_methods`.
+        The name of the model to initialize. Must be one of the supported
+        models listed in `_model_list` or `_ensamble_methods`.
 
     estimators_info : dict, optional
         Additional information about estimators, if any. Default is None.
@@ -60,7 +61,8 @@ class Model():
 
     Methods:
     -------
-    None in the current implementation, but the class dynamically assigns a method to `_model` based on `model_name`.
+    None in the current implementation, but the class dynamically assigns a
+    method to `_model` based on `model_name`.
     """
     def __init__(self, model_name, estimators_info=None,
                  optimization=False, **kwargs):

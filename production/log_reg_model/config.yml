@@ -29,9 +29,11 @@ features:
   - concavity_worst
   - concave points_worst
   - symmetry_worst
+  - area_mean
 
 # Train/test split.
 test_size: 0.1
+split_seed: 8
 
 # Set the random seed.
 random_state: 42
@@ -66,6 +68,7 @@ log_transform_vars:
   - area_worst
   - smoothness_worst
   - symmetry_worst
+  - area_mean
 
 # Model parameters.
 model_params:
