@@ -5,3 +5,5 @@ __pycache__/
 .ipynb_checkpoints/
 todos.txt
 .tox
+dist/
+mcp_binnary_classification_model.egg-info/
