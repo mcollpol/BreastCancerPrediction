@@ -55,9 +55,9 @@ scaler_feature_range:
 # Variables to square root transform.
 square_root_vars: 
   - concavity_mean
-  - concave points_mean
+  - concave_points_mean
   - concavity_worst
-  - concave points_worst
+  - concave_points_worst
 
 # Variables to log transform.
 log_transform_vars:
