@@ -11,7 +11,7 @@ The second phase of this project includes serving the model via a REST API. The 
 The package can be installed by: 
 
 ```bash
-pip install git+https://github.com/mcollpol/BreastCancerPrediction.git@v0.0.1#egg=mcp-binnary-classification-model&subdirectory=production
+pip install "git+https://github.com/mcollpol/BreastCancerPrediction.git@v0.0.1#egg=mcp-binnary-classification-model&subdirectory=production"
 ```
 
 Note: Update the package version if needed.
