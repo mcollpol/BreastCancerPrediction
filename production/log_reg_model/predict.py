@@ -33,22 +33,21 @@ def make_prediction(
         dict: A dictionary containing the predictions, version information,
         and any errors encountered.
     """
-    # Convert input data to a DataFrame
+    # Convert input data to a DataFrame.
     data = pd.DataFrame(input_data)
 
-    # Validate input data
+    # Validate input data.
     validated_data, errors = validate_inputs(input_data=data)
 
-    # Initialize results dictionary
+    # Initialize results dictionary.
     results = {"predictions": None, "version": _version, "errors": errors}
 
-    # Make predictions if there are no validation errors
+    # Make predictions if there are no validation errors.
     if not errors:
         predictions = _pipe.predict(X=validated_data[config.model_config.features])
 
-        # Transform predictions (if needed)
         results = {
-            "predictions": predictions,
+            "predictions": predictions.tolist(),
             "version": _version,
             "errors": errors,
         }

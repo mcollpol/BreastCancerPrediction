@@ -51,8 +51,8 @@ def test_make_prediction(sample_input_data):
 
     # Then
     predictions = result.get("predictions")
-    assert isinstance(predictions, np.ndarray)
-    assert isinstance(predictions[0], (np.int64))
+    assert isinstance(predictions, list)
+    assert isinstance(predictions[0], int)
     assert result.get("errors") is None
     assert len(predictions) == expected_no_predictions
     assert accuracy_score(sample_input_data[config.model_config.target],
